@@ -1,17 +1,34 @@
 package com.example.tiptime
 
+import org.junit.Assert.assertEquals
 import org.junit.Test
+import java.text.NumberFormat
 
-import org.junit.Assert.*
+class TipCalculatorTests {
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+    fun calculateTip_20PercentNoRoundup() {
+        val expectedTip = NumberFormat.getCurrencyInstance().format(2.0)
+
+        val actualTip = calculateTip(
+            amount = 10.0,
+            tipPercent = 20.0,
+            roundUp = false
+        )
+
+        assertEquals(expectedTip, actualTip)
+    }
+
+    @Test
+    fun calculateTip_15PercentRoundup() {
+        val expectedTip = NumberFormat.getCurrencyInstance().format(2.0)
+
+        val actualTip = calculateTip(
+            amount = 10.0,
+            tipPercent = 15.0,
+            roundUp = true
+        )
+
+        assertEquals(expectedTip, actualTip)
     }
 }
