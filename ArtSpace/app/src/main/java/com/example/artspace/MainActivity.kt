@@ -31,6 +31,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.artspace.ui.theme.ArtSpaceTheme
+import androidx.compose.foundation.layout.BoxWithConstraints
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,67 +68,71 @@ fun ArtSpaceApp() {
 
     val artist = "Personal photo, 2026"
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .statusBarsPadding()
-            .padding(24.dp)
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = "Art Space",
-            style = MaterialTheme.typography.headlineMedium,
-            fontWeight = FontWeight.Bold
-        )
+    BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+        val imageHeight = if (maxWidth >= 600.dp) 520.dp else 360.dp
 
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Image(
-            painter = painterResource(imageResource),
-            contentDescription = title,
-            contentScale = ContentScale.Fit,
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(360.dp)
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Text(
-            text = title,
-            style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.Bold
-        )
-
-        Text(
-            text = artist,
-            style = MaterialTheme.typography.bodyLarge
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
+                .fillMaxSize()
+                .statusBarsPadding()
+                .padding(24.dp)
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            Button(
-                onClick = {
-                    currentArtwork =
-                        if (currentArtwork == 0) 2 else currentArtwork - 1
-                }
-            ) {
-                Text("Previous")
-            }
+            Text(
+                text = "Art Space",
+                style = MaterialTheme.typography.headlineMedium,
+                fontWeight = FontWeight.Bold
+            )
 
-            Button(
-                onClick = {
-                    currentArtwork =
-                        if (currentArtwork == 2) 0 else currentArtwork + 1
-                }
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Image(
+                painter = painterResource(imageResource),
+                contentDescription = title,
+                contentScale = ContentScale.Fit,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(imageHeight)
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold
+            )
+
+            Text(
+                text = artist,
+                style = MaterialTheme.typography.bodyLarge
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Text("Next")
+                Button(
+                    onClick = {
+                        currentArtwork =
+                            if (currentArtwork == 0) 2 else currentArtwork - 1
+                    }
+                ) {
+                    Text("Previous")
+                }
+
+                Button(
+                    onClick = {
+                        currentArtwork =
+                            if (currentArtwork == 2) 0 else currentArtwork + 1
+                    }
+                ) {
+                    Text("Next")
+                }
             }
         }
     }
